@@ -1,12 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Activity } from "lucide-react"
+import { Activity, Loader2 } from "lucide-react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -26,7 +26,7 @@ const verifyCodeSchema = z.object({
 
 type VerifyCodeFormValues = z.infer<typeof verifyCodeSchema>
 
-export default function VerifyCodePage() {
+function VerifyCodeForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const email = searchParams.get("email") || ""
@@ -88,67 +88,82 @@ export default function VerifyCodePage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 text-center">
-          <div className="flex justify-center mb-4">
-            <Activity className="h-12 w-12" />
-          </div>
-          <CardTitle className="text-2xl md:text-3xl">Verificar Código</CardTitle>
-          <CardDescription>
-            Digite o código de 6 dígitos enviado para {email}
-          </CardDescription>
-        </CardHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardContent className="space-y-4">
-              {error && (
-                <div className="p-3 text-sm rounded-md bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 border">
-                  {error}
-                </div>
-              )}
-              <FormField
-                control={form.control}
-                name="code"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Código de Verificação</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="123456"
-                        type="text"
-                        maxLength={6}
-                        disabled={loading}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-            <CardFooter className="flex flex-col gap-4 pt-2">
-              <Button className="w-full" type="submit" disabled={loading}>
-                {loading ? "Verificando..." : "Verificar Código"}
-              </Button>
-              <Button 
-                type="button" 
-                variant="ghost" 
-                className="w-full" 
-                onClick={resendCode}
-                disabled={loading}
-              >
-                Reenviar Código
-              </Button>
-              <div className="text-center text-sm">
-                <Link href="/login" className="underline">
-                  Voltar para o login
-                </Link>
+    <Card className="w-full max-w-md">
+      <CardHeader className="space-y-1 text-center">
+        <div className="flex justify-center mb-4">
+          <Activity className="h-12 w-12" />
+        </div>
+        <CardTitle className="text-2xl md:text-3xl">Verificar Código</CardTitle>
+        <CardDescription>
+          Digite o código de 6 dígitos enviado para {email}
+        </CardDescription>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <CardContent className="space-y-4">
+            {error && (
+              <div className="p-3 text-sm rounded-md bg-red-50 dark:bg-red-900/10 text-red-600 dark:text-red-400 border">
+                {error}
               </div>
-            </CardFooter>
-          </form>
-        </Form>
-      </Card>
+            )}
+            <FormField
+              control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Código de Verificação</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="123456"
+                      type="text"
+                      maxLength={6}
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex flex-col gap-4 pt-2">
+            <Button className="w-full" type="submit" disabled={loading}>
+              {loading ? "Verificando..." : "Verificar Código"}
+            </Button>
+            <Button 
+              type="button" 
+              variant="ghost" 
+              className="w-full" 
+              onClick={resendCode}
+              disabled={loading}
+            >
+              Reenviar Código
+            </Button>
+            <div className="text-center text-sm">
+              <Link href="/login" className="underline">
+                Voltar para o login
+              </Link>
+            </div>
+          </CardFooter>
+        </form>
+      </Form>
+    </Card>
+  )
+}
+
+export default function VerifyCodePage() {
+  return (
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <Suspense 
+        fallback={
+          <div className="flex flex-col items-center gap-2">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">Carregando...</p>
+          </div>
+        }
+      >
+        <VerifyCodeForm />
+      </Suspense>
     </div>
   )
 }
