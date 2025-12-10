@@ -23,7 +23,7 @@ export default function DashboardLayout({
       </Link>
       <Link href="/dashboard/servers" className="flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors text-muted-foreground">
         <Server className="mr-3 h-4 w-4 shrink-0" />
-        <span className="truncate">Servidores</span>
+        <span className="truncate">Serviços</span>
       </Link>
       <Link href="/dashboard/alerts" className="flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-colors text-muted-foreground">
         <AlertTriangle className="mr-3 h-4 w-4 shrink-0" />
