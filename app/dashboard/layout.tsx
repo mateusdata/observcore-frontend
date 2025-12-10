@@ -17,27 +17,27 @@ export default function DashboardLayout({
   const navigationItems = (
     <>
       <div className="group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground cursor-pointer bg-accent">
-        <BarChart3 className="mr-2 h-4 w-4" />
-        Visão Geral
+        <BarChart3 className="mr-2 h-4 w-4 shrink-0" />
+        <span className="truncate">Visão Geral</span>
       </div>
       <div className="group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground cursor-pointer">
-        <Server className="mr-2 h-4 w-4" />
-        Servidores
+        <Server className="mr-2 h-4 w-4 shrink-0" />
+        <span className="truncate">Servidores</span>
       </div>
       <div className="group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground cursor-pointer">
-        <AlertTriangle className="mr-2 h-4 w-4" />
-        Alertas
+        <AlertTriangle className="mr-2 h-4 w-4 shrink-0" />
+        <span className="truncate">Alertas</span>
       </div>
       <div className="group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground cursor-pointer">
-        <Settings className="mr-2 h-4 w-4" />
-        Configurações
+        <Settings className="mr-2 h-4 w-4 shrink-0" />
+        <span className="truncate">Configurações</span>
       </div>
       <button 
         onClick={logout}
         className="group flex w-full items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground cursor-pointer text-red-500"
       >
-        <LogOut className="mr-2 h-4 w-4" />
-        Sair
+        <LogOut className="mr-2 h-4 w-4 shrink-0" />
+        <span className="truncate">Sair</span>
       </button>
     </>
   )
@@ -72,7 +72,6 @@ export default function DashboardLayout({
             </div>
             <div className="flex items-center gap-2 md:gap-4">
               <div className="hidden sm:flex items-center gap-2 text-xs md:text-sm">
-               
                 {user && (
                   <span className="text-muted-foreground">{user.name}</span>
                 )}
