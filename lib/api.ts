@@ -2,7 +2,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from "axios"
 import Cookies from "js-cookie"
 
 export const api = axios.create({
-  baseURL: "observcore.mateusdata.com.br/api",
+  baseURL: "https://observcore.mateusdata.com.br/api",
   headers: {
     "Content-Type": "application/json",
   },
